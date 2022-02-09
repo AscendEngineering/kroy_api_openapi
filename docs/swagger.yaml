@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info: 
+  title: Kroy Railway Group
+  version: 1.0.0
+paths: 
+  /getAuthToken: 
+    get: 
+      summary: Returns authentication token for a given user
+      operationId: getAuthToken
+      parameters: 
+      - in: body
+        required: true
+        description: "Payload describing which user to get authentication token for. \"sub\" parameter is type of user, which is classified as 1212 for client and 9898 for admin"
+        schema:
+          type: body
+          properties:
+            name:
+              type: string
+            password:
+              type: string
+            sub:
+              type: integer
+              enum: [1212,9898]
+      
+      responses: 
+        '200':
+          description: Authentication token to be used to validate at the /authenticate endpoint
+          content:
+            application/json:
+              schema:
+                properties:
+                  auth_token: 
+                    type: string
+
+  /authenticate:
+    get:
+      summary: Authenticates the user so that they can hit other endpoints (authentication expires after 1 hours)
+      operationId: authenticate
+      parameters:
+        - name: auth_token
+          in: header
+          required: true
+          description: Authentication token from /getAuthToken
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful authentication
+
+  /getActiveDevices: 
+    get: 
+      summary: Get all active devices
+      operationId: getActiveDevices
+      parameters: 
+        - name: auth_token
+          in: header
+          required: true
+          description: Authentication token from /getAuthToken
+          schema:
+            type: string
+      responses: 
+        '200':
+          description: all active devices
+          content:
+            application/json:
+              schema:
+                properties:
+                  active_devices: 
+                    type: array
+                    items:
+                      type: string
+                    example: [Barrington Device 1, Barrington Device 2, Shaumberg Device 1,]
+
+
+
+  /getData: 
+    get: 
+      summary: Get data about a device
+      operationId: getData
+      parameters: 
+        - name: auth_token
+          in: header
+          required: true
+          description: Authentication token from /getAuthToken
+          schema:
+            type: string
+        - in: body
+          required: true
+          description: ""
+          schema:
+            type: body
+            description: Device id and lookback period (how many previous hours of data)
+            properties:
+              device_id:
+                type: string
+                example: West Chicago 5M-South Demo
+              lookback_period:
+                type: integer
+                example: 5
+      responses: 
+        '200':
+          description: data about the device
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: 
+                    type: string
+ 
