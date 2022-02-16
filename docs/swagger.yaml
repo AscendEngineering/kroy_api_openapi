@@ -3,7 +3,7 @@ info:
   title: Kroy Railway Group
   version: 1.0.0
   servers:
-  - url: https://api.example.com
+  - url: http://api.api-kroyrailwaygroup.com/
 paths: 
   /getAuthToken: 
     get: 
