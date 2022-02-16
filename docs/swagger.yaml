@@ -2,13 +2,11 @@ openapi: 3.0.0
 info: 
   title: Kroy Railway Group
   version: 1.0.0
-  servers:
-  - url: http://api.api-kroyrailwaygroup.com/
 paths: 
   /getAuthToken: 
     get: 
       summary: Returns authentication token for a given user
-      operationId: getAuthToken
+      operationId: http://api.api-kroyrailwaygroup.com/getAuthToken
       parameters: 
       - in: body
         required: true
@@ -37,7 +35,7 @@ paths:
   /authenticate:
     get:
       summary: Authenticates the user so that they can hit other endpoints (authentication expires after 1 hours)
-      operationId: authenticate
+      operationId: http://api.api-kroyrailwaygroup.com/authenticate
       parameters:
         - name: Authentication
           in: header
@@ -52,7 +50,7 @@ paths:
   /getActiveDevices: 
     get: 
       summary: Get all active devices
-      operationId: getActiveDevices
+      operationId: http://api.api-kroyrailwaygroup.com/getActiveDevices
       parameters: 
         - name: Authentication
           in: header
@@ -78,7 +76,7 @@ paths:
   /getData: 
     get: 
       summary: Get data about a device
-      operationId: getData
+      operationId: http://api.api-kroyrailwaygroup.com/getData
       parameters: 
         - name: Authentication
           in: header
